@@ -1,0 +1,16 @@
+.link {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #2a363b;
+}
+
+.link:not(:last-child) {
+  margin-right: 20px;
+}
+
+.activeLink {
+  color: #fff;
+}

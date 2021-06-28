@@ -1,0 +1,30 @@
+.list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid #2b92ff;
+  border-radius: 5px;
+}
+
+.item:not(:last-child) {
+  margin-bottom: 4px;
+}
+
+.name {
+  margin-right: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.number {
+  margin-right: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
