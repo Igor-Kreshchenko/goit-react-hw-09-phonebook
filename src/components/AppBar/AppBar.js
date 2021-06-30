@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { authSelectors } from '../../redux/auth';
 import { AppBar, makeStyles } from '@material-ui/core';
 import Navigation from '../Navigation';
@@ -18,21 +18,18 @@ const useStyles = makeStyles({
   },
 });
 
-const MyAppBar = ({ isAuthenticated }) => {
+const MyAppBar = () => {
   const classes = useStyles();
+  const isLoggedIn = useSelector(authSelectors.getIsAuthenticated);
 
   return (
     <AppBar>
       <Container className={classes.root}>
         <Navigation />
-        {isAuthenticated ? <UserMenu /> : <AuthNav />}
+        {isLoggedIn ? <UserMenu /> : <AuthNav />}
       </Container>
     </AppBar>
   );
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: authSelectors.getIsAuthenticated(state),
-});
-
-export default connect(mapStateToProps)(MyAppBar);
+export default MyAppBar;

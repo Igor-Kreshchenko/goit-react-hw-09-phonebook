@@ -1,11 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { TextField } from '@material-ui/core';
 import { filterContacts } from '../../redux/contacts/contacts-actions';
 import { getFilter } from '../../redux/contacts/contacts-selectors';
 
-const Filter = ({ value, onChange }) => {
+const Filter = () => {
+  const dispatch = useDispatch();
+  const value = useSelector(getFilter);
+  const onChange = useCallback(
+    e => {
+      const value = e.target.value;
+      dispatch(filterContacts(value));
+    },
+    [dispatch],
+  );
+
   return (
     <TextField
       label="Search contact by name"
@@ -19,17 +28,4 @@ const Filter = ({ value, onChange }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  value: getFilter(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  onChange: ({ target: { value } }) => dispatch(filterContacts(value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
-
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
+export default Filter;

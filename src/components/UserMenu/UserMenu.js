@@ -1,30 +1,32 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 import { authSelectors, authOperations } from '../../redux/auth';
 import styles from './UserMenu.module.css';
 import defaultAvatar from './default-avatar.png';
 
-const UserMenu = ({ avatar, name, onLogout }) => (
-  <div className={styles.container}>
-    <img src={avatar} alt="" width="32" className={styles.avatar} />
-    <span className={styles.name}>Welcome, {name}</span>
-    <Button
-      style={{ color: '#fff', borderColor: '#fff' }}
-      variant="outlined"
-      type="button"
-      onClick={onLogout}
-    >
-      Logout
-    </Button>
-  </div>
-);
+const UserMenu = () => {
+  const dispatch = useDispatch();
+  const name = useSelector(authSelectors.getUserName);
 
-const mapStateToProps = state => ({
-  name: authSelectors.getUserName(state),
-  avatar: defaultAvatar,
-});
+  const onLogOut = useCallback(() => dispatch(authOperations.logOut()), [
+    dispatch,
+  ]);
 
-const mapDispatchToProps = { onLogout: authOperations.logOut };
+  return (
+    <div className={styles.container}>
+      <img src={defaultAvatar} alt="" width="32" className={styles.avatar} />
+      <span className={styles.name}>Welcome, {name}</span>
+      <Button
+        style={{ color: '#fff', borderColor: '#fff' }}
+        variant="outlined"
+        type="button"
+        onClick={onLogOut}
+      >
+        Logout
+      </Button>
+    </div>
+  );
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);
+export default UserMenu;
